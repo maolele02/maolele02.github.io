@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>链表之单链表基础(2) | maolele'blog</title><meta name="author" content="maolele"><meta name="copyright" content="maolele"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="链表之单链表基础(2) 合并两个升序链表 例如： list1 &#x3D; [2, 5, 7, 8, 12]，list2 &#x3D; [1, 6, 7, 10, 11]，合并后为list &#x3D; [1 2 5 6 7 7 8 10 11 12]。 ​ 我们可以用一个指针指向已合并链表的末尾节点，用另外两个指针分别指向当前需要进行比较合并操作的两个节点，这两个指针可以直接使用传入的两个指针参数：两个升序链表的头节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表之单链表基础(2)">
+<meta property="og:url" content="http://example.com/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-2/index.html">
+<meta property="og:site_name" content="maolele&#39;blog">
+<meta property="og:description" content="链表之单链表基础(2) 合并两个升序链表 例如： list1 &#x3D; [2, 5, 7, 8, 12]，list2 &#x3D; [1, 6, 7, 10, 11]，合并后为list &#x3D; [1 2 5 6 7 7 8 10 11 12]。 ​ 我们可以用一个指针指向已合并链表的末尾节点，用另外两个指针分别指向当前需要进行比较合并操作的两个节点，这两个指针可以直接使用传入的两个指针参数：两个升序链表的头节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/maolele.jpg">
+<meta property="article:published_time" content="2023-05-26T14:03:01.000Z">
+<meta property="article:modified_time" content="2023-05-27T12:07:16.842Z">
+<meta property="article:author" content="maolele">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/maolele.jpg"><link rel="shortcut icon" href="/img/maolele.jpg"><link rel="canonical" href="http://example.com/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '链表之单链表基础(2)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-27 20:07:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/maolele.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="maolele'blog"><span class="site-name">maolele'blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">链表之单链表基础(2)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-26T14:03:01.000Z" title="发表于 2023-05-26 22:03:01">2023-05-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-27T12:07:16.842Z" title="更新于 2023-05-27 20:07:16">2023-05-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="链表之单链表基础(2)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="链表之单链表基础2">链表之单链表基础(2)</h1>
+<h2 id="合并两个升序链表">合并两个升序链表</h2>
+<p>例如：</p>
+<p><code>list1 = [2, 5, 7, 8, 12]</code>，<code>list2 = [1, 6, 7, 10, 11]</code>，合并后为<code>list = [1 2 5 6 7 7 8 10 11 12]</code>。</p>
+<p>​ 我们可以用一个指针指向已合并链表的末尾节点，用另外两个指针分别指向当前需要进行比较合并操作的两个节点，这两个指针可以直接使用传入的两个指针参数：两个升序链表的头节点指针。</p>
+<p>​ 当<code>list1-&gt;val &lt; list2-&gt;val</code>时，我们将 <code>list1</code>指向的节点连接到<code>p</code>指向的节点的下一个节点，然后<code>p</code>和<code>list1</code>后往后挪动一个位置，再继续比较。反之同理。</p>
+<p>​ 合并到最后的情况可能是其中某个链表已为<code>NULL</code>，这时只需将另外一个非空的链表接到<code>p</code>所指节点的后面即可。</p>
+<p>​ 为了统一合并链表起始位置节点和后续位置节点的逻辑，创建一个哑节点，一开始将<code>p</code>指针指向该哑节点，然后再进行比较合并操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Node *<span class="title function_">MergeTwoLists</span><span class="params">(Node *list1, Node *list2)</span></span><br><span class="line">&#123;</span><br><span class="line">    Node dummyNode = &#123;<span class="number">-1</span>, <span class="literal">NULL</span>&#125;;</span><br><span class="line">    Node *p = &amp;dummyNode;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(list1 != <span class="literal">NULL</span> &amp;&amp; list2 != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(list1-&gt;val &lt; list2-&gt;val)</span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;next = list1;</span><br><span class="line">            list1 = list1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;next = list2;</span><br><span class="line">            list2 = list2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p-&gt;next = <span class="literal">NULL</span> == list1 ? list2 : list1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dummyNode.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(n+m)，n和m为两个链表的长度；</p>
+<p>空间复杂度：O(1)</p>
+<h2 id="判断链表是否有环">判断链表是否有环</h2>
+<p>​ 如果链表中有环，则不存在有指针域为<code>NULL</code>的节点。如果链表中无环，则链表末尾节点的指针域为<code>NULL</code>。</p>
+<p>​ 判断链表是否有环，最直观的逻辑就是遍历链表，如果遇到了之前遍历过的节点，就说明有环，如果遍历到<code>NULL</code>，则说明无环。为了能够快速判断遍历的节点是否在之前已遍历过，用哈希表存储所有已遍历节点的地址。具体逻辑如下：</p>
+<p>​ 对链表进行遍历，在遍历时判断当前节点是否存在于哈希表中，若不存在则将该节点的地址存入哈希表，若存在则表明当前是第二次访问该节点，说明链表中存在环，返回<code>TRUE</code>。在遍历的过程中，若用于遍历的指针为<code>NULL</code>，则说明已到链表末尾，该链表无环，返回<code>FALSE</code>。</p>
+<p>​ 具体代码略。</p>
+<p>时间复杂度：O(n)，n为链表的长度；</p>
+<p>空间复杂度：O(n)，n为链表的长度，因为需要用到哈希表，哈希表中存储各个节点的地址。</p>
+<p>也可以使用<strong>floyd判圈</strong>算法(龟兔赛跑法)。</p>
+<p>​ 我们可以让快指针和慢指针一开始都指向第一个节点。在循环中，慢指针每次移动一步，而快指针每次移动2步。</p>
+<p>​ 如果链表中无环，在出发后，快指针始终跑在慢指针的前面，直至快指针到点链表末尾，<code>(NULL == pFast || NULL == pFast-&gt;next)</code>判断条件成立，返回<code>FALSE</code>。</p>
+<p>​ 如果链表中有环，则快指针进入环后，会持续在环中兜圈，这样一来，快指针和慢指针必然会在某一次循环中相遇，判断到相遇后，我们就返回<code>TRUE</code>。</p>
+<p>相遇情况举例：</p>
+<p>​ 假设链表的长度为N，链表末尾节点接到了起始节点，形成一个环链表。在开始赛跑之前，快慢指针都指向起始节点，此时，快指针距离追上慢指针还差N步。每跑一轮，距离N = N-1，所以至多跑N轮后快慢指针再次相遇。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// floyd判圈</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">HasCircle</span><span class="params">(Node *pHead)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span> == pHead || <span class="literal">NULL</span> == pHead-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node *pSlow = pHead, *pFast = pHead;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="literal">NULL</span> == pFast || <span class="literal">NULL</span> == pFast-&gt;next)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> FALSE;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        pSlow = pSlow-&gt;next;</span><br><span class="line">        pFast = pFast-&gt;next-&gt;next;</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">while</span>(pSlow != pFast);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(n)，n为链表的长度；</p>
+<p>空间复杂度：O(1)</p>
+<h2 id="相交链表">相交链表</h2>
+<p>​ 给定两个链表(非环链表)，找出并返回这两个链表相交的起始节点，如果两个链表不存在相交的节点，则返回<code>NULL</code>。</p>
+<p>​ 同样地，该题也可以用哈希表来记录已访问过的节点。先遍历第一个链表，将该链表的所有节点的地址存储到哈希表中。再遍历第一个链表，在遍历的同时判断当前遍历的节点是否已存在于哈希表中，若已存在则说明该节点在之前访问过，即这个节点是两个链表的相交节点。</p>
+<p>​ 具体代码略。</p>
+<p>时间复杂度：O(m+n)，m和n为链表的长度；</p>
+<p>空间复杂度：O(m)，m是第一个被遍历的链表长度。</p>
+<p>​ 双指针法：</p>
+<figure>
+<img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/14/160_statement.png" alt="LinkedList" /><figcaption aria-hidden="true">LinkedList</figcaption>
+</figure>
+<p>我们可以观察相交链表，可以发现相交链表分为三个部分：</p>
+<ul>
+<li>A链表中不相交的部分，该部分的节点数设为a；</li>
+<li>B链表中不相交的部分，该部分的节点数设为b；</li>
+<li>A、B链表相交的部分，该部分的节点数设为c。</li>
+</ul>
+<p>如此划分，则A链表的长度为：m = a + c，B链表的长度为：n = b + c。所以，当a = b时，m = n。</p>
+<p>​ 当c=0时，就是A、B两个链表不相交的情况。这里我们不能根据c = 0判断链表是否相交，因为如果根据这一条件判断的话，那岂不是又是之前使用哈希表的方法？之前我们使用哈希表完成判断链表是否相交的本质就是在找<strong>两个链表中是否存在同一个节点</strong>。我们需要知道同一个节点有多少个才能知道c的值是多少，想要A、B两个链表中完全相同的节点有多少个就又得去记录......所以不根据c = 0进行判断。</p>
+<p>先考虑最容易想的情况，那就是a = b的情况：</p>
+<p>​ 对于这种情况，我们会很直观的想到可以用两个指针<code>pA</code>和<code>pB</code>来同时遍历A、B两个链表。</p>
+<p>​ 若是相交链表，则<code>pA</code>和<code>pB</code>一定能同时到达第一个相交的节点。所以我们可以在每次移动<code>pA</code>和<code>pB</code>之前判断两个指针所指节点的地址是否相等，若相等则说明两个链表一定相交。</p>
+<p>​ 若不是相交链表，则<code>pA</code>和<code>pB</code>会同时到达<code>A</code>、<code>B</code>链表的尾节点(不相交也就是c=0，a=b，那么m=n嘛)。也就是说，在遍历的过程中，<code>pA</code>和<code>pB</code>会同时为<code>NULL</code>。所以，"直到<code>pA</code>和<code>pB</code>同时为<code>NULL</code>也还没找到地址相同的节点"可以作为链表不相交的条件。</p>
+<p>再考虑一般情况，a != b(即m != n)：</p>
+<p>​ 对于这种情况，按之前的方法显然是不能使<code>pA</code>和<code>pB</code>同时指向第一个相交节点的，所以不对之前的方法进行修改而直接使用是行不通的。既然我们是因为<code>pA</code>和<code>pB</code>不能同时到达第一个相交节点而无法判断链表是否相交，那么我们可以想想办法怎么让<code>pA</code>和<code>pB</code>可以同时到达第一个相交的节点。</p>
+<p>所以我们需要再次对a != b的情况进行观察。</p>
+<p>​ 既然m = a + c, n = b + c，为了使<code>pA</code>和<code>pB</code>能够同时遍历到第一个相交的节点，应该寻找某个互补相等的条件。那么这样互补一下？<strong>m + b = n + a</strong>。根据这个公式，我们可以得出方案，<code>pA</code>和<code>pB</code>中的某个指针若到达了链表末尾，也就是说值为<code>NULL</code>了，那么我们就让它从另一个链表的头部重新进行遍历。这样一来，因为m + b = n + a，所以如果我们让<code>pA</code>和<code>pB</code>一直遍历下去的话，它们迟早会同时遍历到对方链表的末尾，若是相交链表，则是同时遍历到相交部分的末尾。对于相交链表，既然能够同时遍历到相交部分的末尾，那这不就说明了能够同时遍历到第一个相交的节点嘛！所以，问题就这样解决了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Node *<span class="title function_">GetIntersectionNode</span><span class="params">(Node *list1, Node *list2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span> == list1 || <span class="literal">NULL</span> == list2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 两个用于遍历的指针</span></span><br><span class="line">    Node *pList1 = list1, *pList2 = list2;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 进行遍历</span></span><br><span class="line">    <span class="keyword">while</span>(pList1 != pList2)  <span class="comment">// pList1和pList2相等时退出遍历</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="literal">NULL</span> == pList1)  <span class="comment">// pList1 == NULL, pList2 != NULL</span></span><br><span class="line">        &#123;</span><br><span class="line">            pList1 = list2;  <span class="comment">// 移动到另一个链表的头部</span></span><br><span class="line">            pList2 = pList2-&gt;next;  <span class="comment">// pList2不为空, 继续往后遍历</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="literal">NULL</span> == pList2)  <span class="comment">// pList1 != NULL, pLsit2 == NULL</span></span><br><span class="line">        &#123;</span><br><span class="line">            pList2 = list1;</span><br><span class="line">            pList1 = pList1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>  <span class="comment">// pList1和pList2都不为空</span></span><br><span class="line">        &#123;</span><br><span class="line">            pList1 = pList1-&gt;next;</span><br><span class="line">            pList2 = pList2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 若是相交链表, 此处返回的就是第一个相交节点的地址</span></span><br><span class="line">    <span class="comment">// 若不是相交链表, 此处返回的是NULL(pList1和pList2同时遍历到对方链表的末尾)</span></span><br><span class="line">    <span class="keyword">return</span> pList1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以用三目运算符稍作改进：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Node *<span class="title function_">GetIntersectionNode</span><span class="params">(Node *list1, Node *list2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span> == list1 || <span class="literal">NULL</span> == list2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node *pList1 = list1, *pList2 = list2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(pList1 != pList2)</span><br><span class="line">    &#123;</span><br><span class="line">        pList1 = <span class="literal">NULL</span> == pList1 ? list2 : pList1-&gt;next;</span><br><span class="line">        pList2 = <span class="literal">NULL</span> == pList2 ? list1 : pList2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pList1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(m+n)，m和n是两个链表的长度；</p>
+<p>空间复杂度：O(1)。</p>
+<h2 id="反转链表">反转链表</h2>
+<p>​ 在遍历链表时，将当前节点的指针域改为指向前一个节点。由于单链表的节点中没有指向前一个节点的指针域，所以需要事先存储该节点的前一个节点的地址。</p>
+<p>​ 在更改指针域之前还需要存储后一个节点的地址，以便在修改后将当前节点移动到下一个节点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">ReverseList</span><span class="params">(Node **ppHead)</span></span><br><span class="line">&#123;</span><br><span class="line">    Node *p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">NULL</span> != *ppHead)</span><br><span class="line">    &#123;</span><br><span class="line">        Node *next = (*ppHead)-&gt;next;</span><br><span class="line">        (*ppHead)-&gt;next = p;</span><br><span class="line">        p = *ppHead;</span><br><span class="line">        *ppHead = next;</span><br><span class="line">    &#125;</span><br><span class="line">    *ppHead = p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(n)，n是链表的长度；</p>
+<p>空间复杂度：O(1)</p>
+<h2 id="回文链表">回文链表</h2>
+<p>​ 由于单链表中的节点只有指向下一个节点的指针域，不能直接根据链表判断回文。</p>
+<p>​ 一种思路是先将链表中各个节点的值按顺序存储到数组中，然后利用双指针法对数组进行回文判断。</p>
+<p>​ 具体代码略。</p>
+<p>时间复杂度：O(n)，n是链表的长度；</p>
+<p>空间复杂度：O(n)，n是链表的长度，因为至少需要长度为n的数组来存储链表中各个节点的数据。</p>
+<p>​ 另一种思路是，先将链表的后半部分进行反转，这样就可以对链表使用双指针从两端向内依次判断了。在完成判断后再重新将后半部分的链表再次进行反转，将链表恢复回原先的链表。这个方法的缺点是在多线程并发的情况下不安全。</p>
+<p>时间复杂度：O(n)，n是链表的长度；</p>
+<p>空间复杂度：O(1)。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反转链表</span></span><br><span class="line"><span class="keyword">struct</span> ListNode *<span class="title function_">ReverseList</span><span class="params">(Node *pHead)</span></span><br><span class="line">&#123;</span><br><span class="line">    Node *p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">NULL</span> != pHead)</span><br><span class="line">    &#123;</span><br><span class="line">        Node *next = pHead-&gt;next;</span><br><span class="line">        pHead-&gt;next = p;</span><br><span class="line">        p = pHead;</span><br><span class="line">        pHead = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 判断回文链表</span></span><br><span class="line"><span class="type">bool</span> <span class="title function_">IsPalindrome</span><span class="params">(Node* head)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span> == head) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用快慢指针找到链表的中间节点</span></span><br><span class="line">    Node *pSlow = head, *pFast = head;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">NULL</span> != pFast-&gt;next &amp;&amp; <span class="literal">NULL</span> != pFast-&gt;next-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        pSlow = pSlow-&gt;next;</span><br><span class="line">        pFast = pFast-&gt;next-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    Node *pRear = ReverseList(pSlow-&gt;next);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> result = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(result &amp;&amp; <span class="literal">NULL</span> != pRear)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(head-&gt;val != pRear-&gt;val)</span><br><span class="line">        &#123;</span><br><span class="line">            result = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        head = head-&gt;next;</span><br><span class="line">        pRear = pRear-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 恢复后半部分的链表</span></span><br><span class="line">    pSlow-&gt;next = ReverseList(pRear);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">maolele</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-2/">http://example.com/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">maolele'blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post_share"><div class="social-share" data-image="/img/maolele.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/26/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E7%9A%84Python%E4%BE%BF%E6%8D%B7%E8%84%9A%E6%9C%AC/" title="游戏开发常用的Python便捷脚本"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">游戏开发常用的Python便捷脚本</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-1/" title="链表之单链表基础(1)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">链表之单链表基础(1)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-1/" title="链表之单链表基础(1)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-26</div><div class="title">链表之单链表基础(1)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/maolele.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">maolele</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%802"><span class="toc-number">1.</span> <span class="toc-text">链表之单链表基础(2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">合并两个升序链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF"><span class="toc-number">1.2.</span> <span class="toc-text">判断链表是否有环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">相交链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.</span> <span class="toc-text">反转链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8"><span class="toc-number">1.5.</span> <span class="toc-text">回文链表</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/26/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E7%9A%84Python%E4%BE%BF%E6%8D%B7%E8%84%9A%E6%9C%AC/" title="游戏开发常用的Python便捷脚本">游戏开发常用的Python便捷脚本</a><time datetime="2023-05-26T14:33:29.000Z" title="发表于 2023-05-26 22:33:29">2023-05-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-2/" title="链表之单链表基础(2)">链表之单链表基础(2)</a><time datetime="2023-05-26T14:03:01.000Z" title="发表于 2023-05-26 22:03:01">2023-05-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/26/%E9%93%BE%E8%A1%A8%E4%B9%8B%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E7%A1%80-1/" title="链表之单链表基础(1)">链表之单链表基础(1)</a><time datetime="2023-05-26T11:38:22.000Z" title="发表于 2023-05-26 19:38:22">2023-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By maolele</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"left","width":145,"height":315,"hOffset":60,"vOffset":10},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body></html>
